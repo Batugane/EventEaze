@@ -83,10 +83,12 @@ class MainActivity : AppCompatActivity() {
             Observer { workInfo ->
                 if (workInfo != null && workInfo.state == WorkInfo.State.SUCCEEDED) {
                     val resultData: Data = workInfo.outputData//get output of worker
-//                    Snackbar.make(binding.btnSaveToDatabase, "SUCCEEDED " + resultData.getString("result"), Snackbar.LENGTH_LONG ).show()
+                    // Snackbar.make(binding.btnSaveToDatabase, "SUCCEEDED " + resultData.getString("result"), Snackbar.LENGTH_LONG ).show()
                 }
             })
         workManager.enqueue(workRequest)
+
+
     }
 
 

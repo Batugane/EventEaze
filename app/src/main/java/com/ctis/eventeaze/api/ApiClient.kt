@@ -4,6 +4,7 @@ package com.ctis.eventeaze.api
 import com.ctis.eventeaze.util.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 //STEP1
 object ApiClient {
 

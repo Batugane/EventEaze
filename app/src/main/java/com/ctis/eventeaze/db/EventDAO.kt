@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface EventDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-     fun insertEvent(event: Event)
+    fun insertEvent(event: Event)
 
     @Update
     fun updateEvent(event: Event)

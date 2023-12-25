@@ -23,8 +23,8 @@ class EventWorker(context: Context, workerParams: WorkerParameters) :
 
         return try {
             Log.d("EventWorker", "doWork Called, inputs: $eventName $eventDate")
-
             val newEvent =
+                //creates random id for the event, id= 0 do not mean anything
                 Event(
                     0,
                     eventName,
@@ -40,6 +40,7 @@ class EventWorker(context: Context, workerParams: WorkerParameters) :
 
             Log.d("EventWorker", "End of worker")
             Result.success(outputData)
+
         } catch (throwable: Throwable) {
             Log.e("EventWorker", "Error inserting event", throwable)
             Result.failure()

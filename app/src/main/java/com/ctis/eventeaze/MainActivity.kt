@@ -4,9 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.ctis.eventeaze.api.ApiClient
 import com.ctis.eventeaze.api.EventApiModel
 import com.ctis.eventeaze.api.EventService
+import com.ctis.eventeaze.backgroundservice.EventWorker
 import com.ctis.eventeaze.databinding.ActivityMainBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,7 +22,9 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var eventService: EventService
 
-
+    lateinit var workManager: WorkManager
+    lateinit var workRequest: OneTimeWorkRequest
+    lateinit var customWorker: EventWorker
     lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +64,28 @@ class MainActivity : AppCompatActivity() {
 
         })
         Log.d("JSONARRAYPARSE", "After Request")
+
+
+        //worker exmaple to insert data to our database.
+        //will run this code everytime a user favorites a event for that spesific event!
+        workRequest = OneTimeWorkRequest.Builder(EventWorker::class.java)
+            .setInputData(
+                Data.Builder()
+                    .putString("eventName", " Event Name")
+                    .putString("eventDate", "Event Date")
+                    .putString("eventLocation", "Event Location")
+                    .putString("eventType", "Event Type").build()
+            )
+            .build()
+        workManager = WorkManager.getInstance(applicationContext)
+
+        workManager.getWorkInfoByIdLiveData(workRequest.id).observe(this@MainActivity,
+            Observer { workInfo ->
+                if (workInfo != null && workInfo.state == WorkInfo.State.SUCCEEDED) {
+                    val resultData: Data = workInfo.outputData//get output of worker
+//                    Snackbar.make(binding.btnSaveToDatabase, "SUCCEEDED " + resultData.getString("result"), Snackbar.LENGTH_LONG ).show()
+                }
+            })
     }
 
 

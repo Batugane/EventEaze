@@ -13,7 +13,7 @@ data class Event(
     val name: String,
     val date: String,
     val location: String,
-    val eventType: EventType
+    val eventType: String
 ) {
     override fun toString(): String {
         return "Event(id=$id, name='$name', date='$date', location='$location', eventType=$eventType)"

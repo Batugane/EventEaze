@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
 //                    Snackbar.make(binding.btnSaveToDatabase, "SUCCEEDED " + resultData.getString("result"), Snackbar.LENGTH_LONG ).show()
                 }
             })
+        workManager.enqueue(workRequest)
     }
 
 

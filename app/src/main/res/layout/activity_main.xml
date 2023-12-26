@@ -5,58 +5,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Top App Bar -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBar"
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorError"
-        android:textAlignment="textEnd"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:layout_constraintTop_toTopOf="parent">
 
-        app:title="Favorites"
-        app:titleCentered="true" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_launcher_foreground"
+            app:title="@string/app_name" />
 
-    <!-- Fragment Container -->
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragFavoritesContainer"
-        android:layout_width="371dp"
-        android:layout_height="486dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topAppBar" />
-
-    <!-- RecyclerView -->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewFavorites"
-        android:layout_width="312dp"
-        android:layout_height="446dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="14dp"
-        app:layout_constraintBottom_toBottomOf="@+id/fragFavoritesContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragFavoritesContainer"
-        app:layout_constraintVertical_bias="0.08" />
-
-    <Button
-        android:id="@+id/iconButton"
-        style="?attr/materialIconButtonFilledStyle"
-        android:layout_width="123dp"
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-
+        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragFavoritesContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.material.tabs.TabLayout
+
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints">
+
+
+        <com.google.android.material.tabs.TabItem
+
+            android:layout_width="128dp"
+            android:layout_height="160dp"
+            android:icon="@drawable/celebration_24px"
+            android:text="@string/tab1" />
+
+        <com.google.android.material.tabs.TabItem
+
+            android:layout_width="141dp"
+            android:layout_height="157dp"
+            android:icon="@drawable/favorite_24px"
+            android:text="@string/tab2"
+            tools:layout_editor_absoluteX="235dp"
+            tools:layout_editor_absoluteY="7dp" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

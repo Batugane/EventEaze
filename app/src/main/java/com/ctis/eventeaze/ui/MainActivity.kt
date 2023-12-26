@@ -1,20 +1,23 @@
-package com.ctis.eventeaze
+package com.ctis.eventeaze.ui
 
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.ctis.eventeaze.R
 import com.ctis.eventeaze.api.ApiClient
 import com.ctis.eventeaze.api.EventApiModel
 import com.ctis.eventeaze.api.EventService
 import com.ctis.eventeaze.backgroundservice.EventWorker
 import com.ctis.eventeaze.databinding.ActivityMainBinding
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,16 +31,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var customWorker: EventWorker
     lateinit var binding: ActivityMainBinding
 
+    lateinit var bottomFragment :BottomFragment
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
 
-        private fun replaceFragment(fragment: Fragment) {
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentContainer, fragment)
-            transaction.commit()
-        }
+
+
         eventService = ApiClient.getClient()
             .create(EventService::class.java) // By that reference retrofit understands which requests will be sent to server
 
@@ -96,5 +99,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+    private fun loadFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragmentContainer, fragment)
+        transaction.commit()
+    }
 }

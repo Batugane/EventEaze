@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
@@ -29,11 +31,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var customWorker: EventWorker
     lateinit var binding: ActivityMainBinding
 
+    lateinit var bottomFragment :BottomFragment
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
+
 
 
         eventService = ApiClient.getClient()
@@ -94,5 +99,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+    private fun loadFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragmentContainer, fragment)
+        transaction.commit()
+    }
 }

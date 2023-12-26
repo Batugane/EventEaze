@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
@@ -17,29 +16,32 @@ import com.ctis.eventeaze.api.EventApiModel
 import com.ctis.eventeaze.api.EventService
 import com.ctis.eventeaze.backgroundservice.EventWorker
 import com.ctis.eventeaze.databinding.ActivityMainBinding
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
-
     lateinit var eventService: EventService
-
     lateinit var workManager: WorkManager
     lateinit var workRequest: OneTimeWorkRequest
     lateinit var customWorker: EventWorker
     lateinit var binding: ActivityMainBinding
-
     lateinit var bottomFragment :BottomFragment
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
-
+            binding.toggleButton2.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    binding.lottieAnimation.progress=0.1f
+                    binding.lottieAnimation.pauseAnimation()
+                } else {
+                    binding.lottieAnimation.playAnimation()
+                }
+            }
 
         eventService = ApiClient.getClient()
             .create(EventService::class.java) // By that reference retrofit understands which requests will be sent to server
@@ -96,8 +98,7 @@ class MainActivity : AppCompatActivity() {
             })
         workManager.enqueue(workRequest)
 
-
-    }
+}
 
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()

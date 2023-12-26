@@ -1,8 +1,7 @@
-package com.ctis.eventeaze
+package com.ctis.eventeaze.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -10,6 +9,7 @@ import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.ctis.eventeaze.R
 import com.ctis.eventeaze.api.ApiClient
 import com.ctis.eventeaze.api.EventApiModel
 import com.ctis.eventeaze.api.EventService

@@ -2,6 +2,7 @@ package com.ctis.eventeaze
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -14,6 +15,7 @@ import com.ctis.eventeaze.api.EventApiModel
 import com.ctis.eventeaze.api.EventService
 import com.ctis.eventeaze.backgroundservice.EventWorker
 import com.ctis.eventeaze.databinding.ActivityMainBinding
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,10 +29,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var customWorker: EventWorker
     lateinit var binding: ActivityMainBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(R.layout.favorite)
+        setContentView(R.layout.activity_main)
 
 
         eventService = ApiClient.getClient()

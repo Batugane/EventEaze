@@ -66,19 +66,24 @@
         android:id="@+id/imageViewMoviePicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="61dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tvMovieItemDate"
         app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+
         tools:srcCompat="@tools:sample/avatars" />
 
+
+
+    <!--
     <com.google.android.material.button.MaterialButton
         android:id="@+id/iconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/img" <!-- Replace with your icon -->
+        android:icon="@drawable/img"  Replace with your icon
     android:contentDescription="@string/icon_description" />
+    -->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

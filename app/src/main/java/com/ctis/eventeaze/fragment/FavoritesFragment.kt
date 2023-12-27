@@ -14,6 +14,8 @@ import com.ctis.eventeaze.db.Event
 import com.ctis.eventeaze.db.EventViewModel
 import com.google.android.material.snackbar.Snackbar
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 
 class FavoritesFragment : Fragment(),
     FavoritesRecyclerViewAdapter.FavoritesRecyclerAdapterInterface {
@@ -32,6 +34,7 @@ class FavoritesFragment : Fragment(),
     ): View? {
         val recyclerView = binding.favoritesRecyclerView
         val layoutManager = LinearLayoutManager(context)
+
         layoutManager!!.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = layoutManager
         eventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
@@ -47,10 +50,39 @@ class FavoritesFragment : Fragment(),
         })
 
         recyclerView.adapter = adapter
-
+        setupRecyclerView()
+        setupSwipeToDelete()
         return binding.root
     }
+    private fun setupRecyclerView() {
+        val adapter = FavoritesRecyclerViewAdapter(requireContext())
+        binding.favoritesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            this.adapter = adapter
+        }
 
+        eventViewModel.readAllData.observe(viewLifecycleOwner, Observer { favorites ->
+            adapter.setData(favorites)
+        })
+    }
+
+
+    private fun setupSwipeToDelete() {
+        val swipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                return false // Move functionality is not needed here
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val event = (binding.favoritesRecyclerView.adapter as FavoritesRecyclerViewAdapter).getEventAtPosition(position)
+                removeFavorite(event)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(binding.favoritesRecyclerView)
+    }
     override fun removeFavorite(event: Event) {
         eventViewModel.deleteEvent(event)
         Snackbar.make(binding.root, "${event.name} is deleted", Snackbar.LENGTH_LONG).show()

@@ -26,7 +26,8 @@ import com.ctis.eventeaze.db.Event
 
 class FavoritesRecyclerViewAdapter(private val context: Context) :
     RecyclerView.Adapter<FavoritesRecyclerViewAdapter.RecyclerViewItemHolder>() {
-        interface FavoritesRecyclerAdapterInterface {
+
+    interface FavoritesRecyclerAdapterInterface {
         fun removeFavorite(event: Event)
     }
 
@@ -34,12 +35,15 @@ class FavoritesRecyclerViewAdapter(private val context: Context) :
         context as FavoritesRecyclerAdapterInterface
 
     private var recyclerItemValues = emptyList<Event>()
+
     fun setData(items: List<Event>) {
         recyclerItemValues = items
         notifyDataSetChanged()
     }
 
-
+    fun getEventAtPosition(position: Int): Event {
+        return recyclerItemValues[position]
+    }
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerViewItemHolder {
         val inflator = LayoutInflater.from(viewGroup.context)
         val itemView: View = inflator.inflate(R.layout.item_layout, viewGroup, false)

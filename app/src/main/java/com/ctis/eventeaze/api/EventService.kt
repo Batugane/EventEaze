@@ -8,10 +8,10 @@ import retrofit2.http.Query
 
 //GET(.) yapmamın sebebi ROOT URL'e estik atmamız.
 interface EventService {
-    @GET(".")
+    @GET("2V2A")
     fun getAllEvents(): Call<List<EventApiModel>>
 
-    @GET(".")
+    @GET("2V2A")
     fun getEventById(@Query("id") id: Int): Call<EventApiModel>
 
 }

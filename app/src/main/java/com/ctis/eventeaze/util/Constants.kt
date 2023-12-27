@@ -5,6 +5,6 @@ object Constants {
     const val DATABASENAME = "eventsDB"
 
     //change this to used server
-    const val BASEURL = "https://www.jsonkeeper.com/b/MPKY/"
+    const val BASEURL = "https://www.jsonkeeper.com/b/"
 
 }

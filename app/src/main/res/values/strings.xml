@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">EventEaze</string>
 
+    <string name="appBarLayout2">appBarLayout2</string>
+    <string name="fragmentContainer">fragmentContainer</string>
+    <string name="bottomNav">bottomNav</string>
+    <string name="eventsRecyclerView">eventsRecyclerView</string>
+    <string name="favoritesRecyclerView">favoritesRecyclerView</string>
+    <string name="btnDeleteAll">btnDeleteAll</string>
+    <string name="itemConstraint">itemConstraint</string>
+    <string name="tvItemLocation">tvItemLocation</string>
+    <string name="tvItemDate">tvItemDate</string>
+    <string name="tvItemType">tvItemType</string>
+    <string name="tvItemName">tvItemName</string>
+    <string name="imgEvent">imgEvent</string>
+    <string name="lottieAnimation">lottieAnimation</string>
 
     <string name="tab2">Favorites</string>
     <string name="tab1">Events</string>

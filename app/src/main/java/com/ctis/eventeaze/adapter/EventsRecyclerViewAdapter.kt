@@ -1,6 +1,10 @@
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.media.AudioManager
+import android.media.MediaPlayer
+import android.view.GestureDetector
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -14,6 +18,7 @@ import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.airbnb.lottie.LottieAnimationView
 import com.ctis.eventeaze.MainActivity
 import com.ctis.eventeaze.R
 import com.ctis.eventeaze.backgroundservice.EventWorker
@@ -26,9 +31,12 @@ class EventsRecyclerViewAdapter(
     RecyclerView.Adapter<EventsRecyclerViewAdapter.RecyclerViewItemHolder>() {
     lateinit var workManager: WorkManager
     lateinit var workRequest: OneTimeWorkRequest
+    private val clickedEvents: HashSet<Int> = HashSet()
+    private var mediaPlayer: MediaPlayer? = null
+    lateinit var itemView: View
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerViewItemHolder {
         val inflator = LayoutInflater.from(viewGroup.context)
-        val itemView: View = inflator.inflate(R.layout.item_layout, viewGroup, false)
+        itemView = inflator.inflate(R.layout.item_layout, viewGroup, false)
         return RecyclerViewItemHolder(itemView)
     }
 
@@ -39,6 +47,39 @@ class EventsRecyclerViewAdapter(
         holder.tvItemDate.text = event.date ?: "N/A"
         holder.tvItemLocation.text = event.location ?: "N/A"
         holder.tvItemType.text = event.eventType ?: "N/A"
+
+        holder.addFavAnimation.setOnClickListener {
+
+                holder.addFavAnimation.playAnimation()
+                clickedEvents.add(event.id)
+
+                    playSong()
+
+                //worker example to insert data to our database.
+                //will run this code everytime a user favorites a event for that spesific event!
+                workRequest = OneTimeWorkRequest.Builder(EventWorker::class.java)
+                    .setInputData(
+                        Data.Builder()
+                            .putString("eventName", event.name)
+                            .putString("eventDate", event.date)
+                            .putString("eventLocation", event.location)
+                            .putString("eventType", event.eventType).build()
+                    )
+                    .build()
+                workManager = WorkManager.getInstance(context)
+
+                workManager.getWorkInfoByIdLiveData(workRequest.id).observe(context as MainActivity,
+                    Observer { workInfo ->
+                        if (workInfo != null && workInfo.state == WorkInfo.State.SUCCEEDED) {
+                            val resultData: Data = workInfo.outputData//get output of worker
+                        }
+                    })
+                workManager.enqueue(workRequest)
+
+
+        }
+
+
 
         // Set image drawable based on item type
         if (event.eventType == "THEATRE") {
@@ -51,33 +92,8 @@ class EventsRecyclerViewAdapter(
             holder.imgEvent.setImageDrawable(getDrawableByName(holder.itemView.context, "festival"))
         }
 
-        holder.btnFav.setOnClickListener{
-            //worker example to insert data to our database.
-            //will run this code everytime a user favorites a event for that spesific event!
-            workRequest = OneTimeWorkRequest.Builder(EventWorker::class.java)
-                .setInputData(
-                    Data.Builder()
-                        .putString("eventName", event.name)
-                        .putString("eventDate", event.date)
-                        .putString("eventLocation", event.location)
-                        .putString("eventType", event.eventType).build()
-                )
-                .build()
-            workManager = WorkManager.getInstance(context)
 
-            workManager.getWorkInfoByIdLiveData(workRequest.id).observe(context as MainActivity,
-                Observer { workInfo ->
-                    if (workInfo != null && workInfo.state == WorkInfo.State.SUCCEEDED) {
-                        val resultData: Data = workInfo.outputData//get output of worker
-//                         Snackbar.make(binding.btnSaveToDatabase, "SUCCEEDED " + resultData.getString("result"), Snackbar.LENGTH_LONG ).show()
-                    }
-                })
-            workManager.enqueue(workRequest)
-        }
 
-        holder.parentLayout.setOnClickListener {
-
-        }
     }
 
     private fun getDrawableByName(context: Context, drawableName: String): Drawable? {
@@ -98,25 +114,78 @@ class EventsRecyclerViewAdapter(
         return EventSys.events.size
     }
     inner class RecyclerViewItemHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
+        RecyclerView.ViewHolder(itemView), GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
         var tvItemName: TextView
         var tvItemLocation: TextView
         var tvItemDate: TextView
         var tvItemType: TextView
         var imgEvent: ImageView
-        var btnFav: ImageButton
         var parentLayout: ConstraintLayout
-
+        private val gestureDetector = GestureDetector(itemView.context, this)
+        var addFavAnimation: LottieAnimationView
         init {
             tvItemName = itemView.findViewById(R.id.tvItemName)
             tvItemDate = itemView.findViewById(R.id.tvItemDate)
             tvItemLocation = itemView.findViewById(R.id.tvItemLocation)
             tvItemType = itemView.findViewById(R.id.tvItemType)
             imgEvent = itemView.findViewById(R.id.imgEvent)
-            btnFav = itemView.findViewById(R.id.btnFav)
             parentLayout = itemView.findViewById(R.id.itemConstraint)
+            addFavAnimation = itemView.findViewById(R.id.lottieAnimation)
+
+            parentLayout.setOnTouchListener { _, event ->
+                gestureDetector.onTouchEvent(event)
+                true
+            }
+        }
+
+        override fun onDown(e: MotionEvent): Boolean {
+            return false        }
+
+        override fun onShowPress(e: MotionEvent) {
+        }
+
+        override fun onSingleTapUp(e: MotionEvent): Boolean {
+            return false        }
+
+        override fun onScroll(
+            e1: MotionEvent?,
+            e2: MotionEvent,
+            distanceX: Float,
+            distanceY: Float
+        ): Boolean {
+            return false        }
+
+        override fun onLongPress(e: MotionEvent) {
+        }
+
+        override fun onFling(
+            e1: MotionEvent?,
+            e2: MotionEvent,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            return false        }
+
+        override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+            return false        }
+
+        override fun onDoubleTap(e: MotionEvent): Boolean {
+            addFavAnimation.performClick()
+            return true
+        }
+
+        override fun onDoubleTapEvent(e: MotionEvent): Boolean {
+            return false
         }
     }
 
+    private fun playSong(){
+
+            if (mediaPlayer == null) {
+                mediaPlayer = MediaPlayer.create(itemView.context, R.raw.clap)
+                mediaPlayer!!.start()
+            } else mediaPlayer!!.start()
+
+    }
 
 }

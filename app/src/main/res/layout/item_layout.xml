@@ -75,28 +75,20 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:srcCompat="@drawable/movies" />
 
-    <ImageButton
-        android:id="@+id/btnFav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTintMode="screen"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimation"
+        android:layout_width="57dp"
+        android:layout_height="42dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/tvItemLocation"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.763"
-        app:srcCompat="@drawable/favorite_24px" />
-
-
-    <!--
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/iconButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:icon="@drawable/img"  Replace with your icon
-    android:contentDescription="@string/icon_description" />
-    -->
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgEvent"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="Animation2.json"
+        app:lottie_loop="false"
+        app:lottie_repeatMode="restart"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,14 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
+import com.airbnb.lottie.LottieAnimationView
+import com.ctis.eventeaze.MainActivity
 import com.ctis.eventeaze.R
+import com.ctis.eventeaze.backgroundservice.EventWorker
 import com.ctis.eventeaze.db.Event
 
 
@@ -61,15 +68,10 @@ class FavoritesRecyclerViewAdapter(private val context: Context) :
             holder.imgEvent.setImageDrawable(getDrawableByName(holder.itemView.context, "festival"))
         }
 
-
-
-        holder.btnFav.setOnClickListener {
+        holder.addFavAnimation.setOnClickListener {
             favoritesAdapterInterface.removeFavorite(event)
         }
-
-        holder.parentLayout.setOnClickListener {
-
-        }    }
+    }
 
     private fun getDrawableByName(context: Context, drawableName: String): Drawable? {
         val resourceId = context.resources.getIdentifier(
@@ -97,8 +99,9 @@ inner class RecyclerViewItemHolder(itemView: View) :
     var tvItemDate: TextView
     var tvItemType: TextView
     var imgEvent: ImageView
-    var btnFav: ImageButton
     var parentLayout: ConstraintLayout
+    var addFavAnimation: LottieAnimationView
+
 
     init {
         tvItemName = itemView.findViewById(R.id.tvItemName)
@@ -106,8 +109,9 @@ inner class RecyclerViewItemHolder(itemView: View) :
         tvItemLocation = itemView.findViewById(R.id.tvItemLocation)
         tvItemType = itemView.findViewById(R.id.tvItemType)
         imgEvent = itemView.findViewById(R.id.imgEvent)
-        btnFav = itemView.findViewById(R.id.btnFav)
         parentLayout = itemView.findViewById(R.id.itemConstraint)
+        addFavAnimation = itemView.findViewById(R.id.lottieAnimation)
+
     }
 }
 

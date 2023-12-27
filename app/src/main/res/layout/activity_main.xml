@@ -10,6 +10,7 @@
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_launcher_foreground"
+            app:navigationIcon="@drawable/appicon108x108"
             app:title="@string/app_name" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -28,39 +29,21 @@
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
 
-    <com.google.android.material.tabs.TabLayout
-
-        android:id="@+id/tabLayout"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingConstraints">
-
-
-        <com.google.android.material.tabs.TabItem
-
-            android:layout_width="128dp"
-            android:layout_height="160dp"
-            android:icon="@drawable/celebration_24px"
-            android:text="@string/tab1" />
-
-        <com.google.android.material.tabs.TabItem
-
-            android:layout_width="141dp"
-            android:layout_height="157dp"
-            android:icon="@drawable/favorite_24px"
-            android:text="@string/tab2"
-            tools:layout_editor_absoluteX="235dp"
-            tools:layout_editor_absoluteY="7dp" />
-
-    </com.google.android.material.tabs.TabLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentContainer"
+        app:menu="@menu/bottom_nav_menu" />
 
 
 

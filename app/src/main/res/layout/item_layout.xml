@@ -63,7 +63,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
-        android:id="@+id/imageViewPicture"
+        android:id="@+id/imgEvent"
         android:layout_width="392dp"
         android:layout_height="167dp"
         android:layout_marginBottom="92dp"
@@ -76,7 +76,7 @@
         tools:srcCompat="@drawable/movies" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/btnFav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTintMode="screen"

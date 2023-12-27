@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">EventEaze</string>
 
-    <string name="tab1">Events</string>
+
     <string name="tab2">Favorites</string>
+    <string name="tab1">Events</string>
 </resources>
